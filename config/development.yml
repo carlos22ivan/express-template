@@ -1,0 +1,4 @@
+mongodb:
+        url: mongodb://localhost:27017/carlos22ivan
+express:
+        port: 12000

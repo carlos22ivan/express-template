@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    nav.navbar.navbar-light.bg-dark
+        div.container
+            form.form-inline.mx-auto(method='get', action='/search')
+                input.form-control.mr-sm-2(name='query', type='search', placeholder='search ...', required)
+                button.btn.btn-outline-light(type='submit') search
+    if queryHighlight
+        h1.text-center.mt-5.searchHighlight!= queryHighlight
+    if error
+        h1.text-center.mt-5!= error
+
