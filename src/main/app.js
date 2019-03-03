@@ -52,7 +52,7 @@ app.use((req, res, next) => {
  * express server
  */
 app.listen(config.get('express.port'), () => {
-        console.log(`Express server listen in http://localhost:${port}/`)
+        console.log(`Express server listen in http://localhost:${config.get('express.port')}/`)
 })
 
 module.exports = app;
