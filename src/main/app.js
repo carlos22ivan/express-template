@@ -1,10 +1,14 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const morgan = require('morgan')
-const config = require('config')
-const createError = require('http-errors')
-const router = require('./router')
+import path from 'path'
+import morgan from 'morgan'
+import config from 'config'
+import express from 'express'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import createError from 'http-errors'
+
 const app = express()
+
+const router = require('./router')
 
 /**
  * mongodb database
@@ -20,16 +24,20 @@ mongoose.connect(config.get('mongodb.url'))
 /**
  * middleware
  */
+
 app.use(morgan('dev'))
 
-// if views
-// /**
-//  * views
-//  */
-// folder public/, views/
-// app.set('views', path.join(__dirname, 'views'))
-// app.set('view engine', 'pug')
-// app.use(express.static(path.join(__dirname, 'public')))
+/**
+ * view -> app.use(bodyParser.urlencoded({ extended: false }))
+ * json -> app.use(bodyParser.json())
+ */
+
+/**
+ * view:
+ * app.set('views', path.join(__dirname, 'views'))
+ * app.set('view engine', 'pug')
+ * app.use(express.static(path.join(__dirname, 'public')))
+ */
 
 /**
  * routes
@@ -41,18 +49,38 @@ app.use(router)
  * error handler
  */
 app.use((req, res, next) => {
-        // if views
-        // let params = {error: createError(404)}
-        // res.render('error', params)
-        // if rest
-        // res.status(404).json(createError(404))
+        /**
+         * view :
+         * let params = {error: createError(404)}
+         * res.render('error', params)
+         * json -> res.status(404).json(createError(404))
+         */
 });
+
+app.use((err, req, res, next) => {
+        if (err.name === 'UnauthorizedError') {
+                /**
+                 * view :
+                 * let params = {error: createError(401)}
+                 * res.render('error', params)
+                 * json -> res.status(401).json({message: 'invalid token!'})
+                 */
+        }
+        /**
+         * view :
+         * let params = {error: createError(500)}
+         * res.render('error', params)
+         * json -> res.status(500).json({message: 'server error :c'})
+         */
+});
+
 
 /**
  * express server
  */
-app.listen(config.get('express.port'), () => {
-        console.log(`Express server listen in http://localhost:${config.get('express.port')}/`)
+const port = config.get('express.port')
+app.listen(port, () => {
+        console.log(`Express server listen in http://localhost:${port}/`)
 })
 
 module.exports = app;
