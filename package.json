@@ -4,7 +4,7 @@
         "description": "express + mogodb, application template.",
         "main": "index.js",
         "scripts": {
-                "start": "nodemon src/main/app",
+                "start": "nodemon --exec BABEL_DISABLE_CACHE=1 babel-node src/main/app",
                 "test": "echo \"Error: no test specified\" && exit 1"
         },
         "repository": {
@@ -23,6 +23,8 @@
         },
         "homepage": "https://github.com/carlos22ivan/express-template#readme",
         "dependencies": {
+                "await-to-js": "^2.1.1",
+                "body-parser": "^1.18.3",
                 "config": "^2.0.1",
                 "express": "^4.16.4",
                 "http-errors": "^1.7.1",
@@ -31,6 +33,10 @@
                 "morgan": "^1.9.1"
         },
         "devDependencies": {
+                "@babel/cli": "^7.2.3",
+                "@babel/core": "^7.2.2",
+                "@babel/node": "^7.2.2",
+                "@babel/preset-env": "^7.3.1",
                 "nodemon": "^1.18.5"
         }
 }
